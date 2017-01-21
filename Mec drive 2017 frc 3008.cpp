@@ -1,14 +1,21 @@
 #include "WPILib.h"
 
 /* I/O Setup */
+Joystick *ROJoystick
 
-ROJoystick usb1(1);         // Joystick #1
+public:
+     Robot(){
+     
+     void RobotInit() {
+     ROJoystick = new Joystick(1);
+     ROJoystick = new Joystick(2);
+     ROJoystick = new Joystick(3);
 
-ROPWM pwm0(0);
-ROPWM pwm1(1);
-ROPWM pwm2(2);
-ROPWM pwm3(3);
-
+     ROPWM pwm0(0);
+     ROPWM pwm1(1);
+     ROPWM pwm2(2);
+     ROPWM pwm3(3);
+     }
 void setup()
 {
   /* Initiate comms */
