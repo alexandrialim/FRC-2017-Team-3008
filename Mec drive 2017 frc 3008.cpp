@@ -1,4 +1,4 @@
-#include "WPILib.h"
+#include "wpilibc.h"
 
 /* I/O Setup */
 Joystick *ROJoystick
