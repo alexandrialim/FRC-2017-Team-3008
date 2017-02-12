@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3008.robot;
+package org.usfirst.frc.team4334.drive;
 //import org.omg.CORBA.PUBLIC_MEMBER;
 
 //Importing stuff from wpilib
@@ -55,16 +55,53 @@ public class Robot extends SampleRobot {
 	boolean liftTrigger = joystick.getTrigger();
     public boolean buttonValue;{
 	buttonValue = joystick.getTrigger();
+	
 }
 	//initializing the maximum cussion and minimum cussion for easy editing
 	double CUSSION_MAX = 2;
 	double CUSSION_MIN = -2;
 	//main body for functions
-    public double sanicMode(){if(liftTrigger = true){return 2;}else{return 4;}} //returns 2 or 4 depending on if the trigger is down
-	public double getTrueX(){if (joystickX < CUSSION_MAX && joystickX > CUSSION_MIN){return joystickX;}else return 0;}//returns cussioned X of joystick0
-	public double getTrueY(){if (joystickY < CUSSION_MAX && joystickY > CUSSION_MIN){return joystickY;}else return 0;}//returns cussioned Y of joystick0
-	public double getTurningTrueX(){if (turningJoyX < CUSSION_MAX && turningJoyX > CUSSION_MIN){return turningJoyX;}else return 0;}//returns cussioned X of joystick1
-	public double getTurningTrueY(){if (turningJoyY < CUSSION_MAX && turningJoyY > CUSSION_MIN){return turningJoyY;}else return 0;}//returns cussioned Y of joystick1
+    
+	public double sanicMode(){ //returns 2 or 4 depending on if the trigger is down
+    	if(liftTrigger = true)
+    		return 2;
+    	else
+    		return 4;
+    	
+	} 
+	
+    
+    public double getTrueX(){ //returns cussioned X of joystick0
+    	if (joystickX < CUSSION_MAX && joystickX > CUSSION_MIN)
+    		return joystickX;
+    	else return 0;
+    	
+    }
+	public double getTrueY(){
+		if (joystickY < CUSSION_MAX && joystickY > CUSSION_MIN)
+		return joystickY;
+		else return 0;
+		
+	}//returns cussioned Y of joystick0
+	
+	
+	public double getTurningTrueX(){//returns cussioned X of joystick1
+		if (turningJoyX < CUSSION_MAX && turningJoyX > CUSSION_MIN)
+			return turningJoyX;
+		else return 0;
+		
+	}
+	
+	
+	public double getTurningTrueY(){//returns cussioned Y of joystick1
+		if (turningJoyY < CUSSION_MAX && turningJoyY > CUSSION_MIN)
+			return turningJoyY;
+		
+		else 
+			return 0;
+		
+	}
+	
 	
 	public void updateStickValues(){ // Update stick values function to be called inside for the main WHILE loop
 		otherPosTRUE = 0;
@@ -72,14 +109,46 @@ public class Robot extends SampleRobot {
 		yTank = 0;
 		zTank = 0;
 		//If joysticks are in x+ and x+ go forward and vice versa
-		if (getTrueY() > 0 && getTurningTrueY() > 0 && otherPosTRUE == 0) {xTank = -getTrueY() + -getTurningTrueY() / sanicMode(); otherPosTRUE = 1;}//1
-		if (getTrueY() < 0 && getTurningTrueY() < 0 && otherPosTRUE == 0) {xTank = -getTrueY() + -getTurningTrueY() / sanicMode(); otherPosTRUE = 1;}//-1
+		if (getTrueY() > 0 && getTurningTrueY() > 0 && otherPosTRUE == 0){
+			xTank = -getTrueY() + -getTurningTrueY() / sanicMode(); 
+			otherPosTRUE = 1;
+			
+		}//1
+		
+		
+		if (getTrueY() < 0 && getTurningTrueY() < 0 && otherPosTRUE == 0) {
+			xTank = -getTrueY() + -getTurningTrueY() / sanicMode();
+			otherPosTRUE = 1;
+			
+		}//-1
+		
+		
 		// If joysticks are in x+ and x- turn in respective direction 
-		if (getTrueY() < 0 && getTurningTrueY() > 0 && otherPosTRUE == 0) {yTank = getTrueY() * 2 / sanicMode(); otherPosTRUE = 1;}//1
-		if (getTrueY() > 0 && getTurningTrueY() < 0 && otherPosTRUE == 0) {yTank = getTurningTrueY() * 2 / sanicMode(); otherPosTRUE = 1;}//-1
+		if (getTrueY() < 0 && getTurningTrueY() > 0 && otherPosTRUE == 0) {
+			yTank = getTrueY() * 2 / sanicMode(); 
+			otherPosTRUE = 1;
+			
+		}//1
+		
+		
+		if (getTrueY() > 0 && getTurningTrueY() < 0 && otherPosTRUE == 0) {
+			yTank = getTurningTrueY() * 2 / sanicMode(); 
+			otherPosTRUE = 1;
+			
+		}//-1
+		
+		
 		//Straif based on joystick y axis
-		if (getTrueX() > 0 && getTurningTrueX() > 0) {zTank = 1 / sanicMode();}//1
-		if (getTrueX() < 0 && getTurningTrueX() < 0) {zTank = -1 / sanicMode();}// -1
+		if (getTrueX() > 0 && getTurningTrueX() > 0) {
+			zTank = 1 / sanicMode();
+			
+		}//1
+		
+		
+		if (getTrueX() < 0 && getTurningTrueX() < 0) {
+			zTank = -1 / sanicMode();
+			
+		}// -1
 		
 	}
 
@@ -102,8 +171,6 @@ public class Robot extends SampleRobot {
 			//Updating 
 			liftTrigger = joystick.getTrigger();
 			
-		  
-		    }
 			
 			updateStickValues(); // Updating yTank xTank and zTank see the function for more information
 			//lift(); //Oporation of the lift see lift function
@@ -113,6 +180,10 @@ public class Robot extends SampleRobot {
 			System.out.println(joystickX); //Debug info (make UI later)
 			
 			Timer.delay(0.005); // to prevent cpu hogging
+		  
+		    }
+			
+			
 		
 		
 		
