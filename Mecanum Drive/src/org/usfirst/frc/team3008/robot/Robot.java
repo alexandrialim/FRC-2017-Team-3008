@@ -18,7 +18,7 @@ public class Robot extends SampleRobot {
 	Joystick turning = new Joystick(1);//initializing turning joy (change to joyL)
 	Joystick liftstick = new Joystick(2); //Joystick for lift (srd joystick for second driver
 	Spark lift = new Spark(0); // initalizing lift spark
-	
+
 	// Channels for the wheels
 	//Initializing ports
 	final int kFrontLeftChannel = 8;
@@ -52,16 +52,15 @@ public class Robot extends SampleRobot {
 	double zTank = 0;
 	//initializing some random variables
 	double otherPosTRUE = 0;
-	boolean lifttrigger = liftstick.getTrigger();
-	boolean driveTrigger = joystick.getTrigger();
+	boolean liftTrigger = joystick.getTrigger();
     public boolean buttonValue;{
-	buttonValue = liftstick.getTrigger();
+	buttonValue = joystick.getTrigger();
 }
 	//initializing the maximum cussion and minimum cussion for easy editing
 	double CUSSION_MAX = 2;
 	double CUSSION_MIN = -2;
 	//main body for functions
-    public double sanicMode(){if(driveTrigger = true){return 2;}else{return 4;}} //returns 2 or 4 depending on if the trigger is down
+    public double sanicMode(){if(liftTrigger = true){return 2;}else{return 4;}} //returns 2 or 4 depending on if the trigger is down
 	public double getTrueX(){if (joystickX < CUSSION_MAX && joystickX > CUSSION_MIN){return joystickX;}else return 0;}//returns cussioned X of joystick0
 	public double getTrueY(){if (joystickY < CUSSION_MAX && joystickY > CUSSION_MIN){return joystickY;}else return 0;}//returns cussioned Y of joystick0
 	public double getTurningTrueX(){if (turningJoyX < CUSSION_MAX && turningJoyX > CUSSION_MIN){return turningJoyX;}else return 0;}//returns cussioned X of joystick1
@@ -85,14 +84,14 @@ public class Robot extends SampleRobot {
 	}
 
 	
-	//public void done() {System.out.println("Status:() : All done!");}
+	public void done() {System.out.println("Status:() : All done!");}
 	
 	//lift running spark if turning trigger is true
 	
 	
 		
 	public void operatorControl() {
-		robotDrive.setSafetyEnabled(true);
+		//robotDrive.setSafetyEnabled(false);
 		while (isOperatorControl() && isEnabled()) {
 			//Updating joystickX and joystickY variables
 			joystickX = joystick.getRawAxis(0);
@@ -101,18 +100,17 @@ public class Robot extends SampleRobot {
 			turningJoyX = turning.getRawAxis(0);
 			turningJoyY = turning.getRawAxis(1);
 			//Updating 
-		//	lifttrigger = liftstick.getTrigger();
-			driveTrigger = joystick.getTrigger();
+			liftTrigger = joystick.getTrigger();
 			
 		  
 		    }
 			
 			updateStickValues(); // Updating yTank xTank and zTank see the function for more information
-			lift(); //Oporation of the lift see lift function
+			//lift(); //Oporation of the lift see lift function
 			
 			robotDrive.mecanumDrive_Cartesian(yTank, xTank, zTank, 0);
 					
-			//System.out.println(joystickX); //Debug info (make UI later)
+			System.out.println(joystickX); //Debug info (make UI later)
 			
 			Timer.delay(0.005); // to prevent cpu hogging
 		
@@ -120,7 +118,9 @@ public class Robot extends SampleRobot {
 		
 		}
 	
-	 public int whenActive(final Command command) {
+	/* private void lift1() {
+	     
+	int whenActive; final Command command; {
 		    new ButtonScheduler() {
 
 		      private boolean m_pressedLast = grab();
@@ -133,22 +133,25 @@ public class Robot extends SampleRobot {
 		            command.start();
 		          }
 		        } else {
-		          m_pressedLast = false;
+		          m_pressedLast = false; 
+		         
 		        }
+		     
+		   
 		      }
-			
-		    }return 0;
-		  }
-
+		   (); }
+	}
+	 }*/
 		
 	 
-	protected boolean grab() {
+	/*protected boolean grab() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-	private void lift() {
+	}*/
+	
+	/* private void lift() {
 		// TODO Auto-generated method stub//
-			        
+		*/	        
 		        
 	}
 	/*private void LauncherStopWheels() {
@@ -164,4 +167,3 @@ public class Robot extends SampleRobot {
 		
 	}
 	*/
-}
