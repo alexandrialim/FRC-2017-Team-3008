@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4334.drive;
+package org.usfirst.frc.team3008.robot;
 //import org.omg.CORBA.PUBLIC_MEMBER;
 
 //Importing stuff from wpilib
@@ -74,13 +74,15 @@ public class Robot extends SampleRobot {
     public double getTrueX(){ //returns cussioned X of joystick0
     	if (joystickX < CUSSION_MAX && joystickX > CUSSION_MIN)
     		return joystickX;
-    	else return 0;
+    	else 
+    		return 0;
     	
     }
 	public double getTrueY(){
 		if (joystickY < CUSSION_MAX && joystickY > CUSSION_MIN)
 		return joystickY;
-		else return 0;
+		else 
+			return 0;
 		
 	}//returns cussioned Y of joystick0
 	
@@ -88,7 +90,8 @@ public class Robot extends SampleRobot {
 	public double getTurningTrueX(){//returns cussioned X of joystick1
 		if (turningJoyX < CUSSION_MAX && turningJoyX > CUSSION_MIN)
 			return turningJoyX;
-		else return 0;
+		else 
+			return 0;
 		
 	}
 	
@@ -188,43 +191,48 @@ public class Robot extends SampleRobot {
 		
 		
 		}
+
 	
-	/* private void lift1() {
+	 private void lift() {
 	     
 	int whenActive; final Command command; {
 		    new ButtonScheduler() {
 
 		      private boolean m_pressedLast = grab();
 
-		      @Override
+		      //@Override
 		      public void execute() {
 		        if (grab()) {
 		          if (!m_pressedLast) {
 		            m_pressedLast = true;
 		            command.start();
 		          }
-		        } else {
+		         else {
 		          m_pressedLast = false; 
-		         
+		  
 		        }
+		      }
 		     
 		   
-		      }
-		   (); }
-	}
-	 }*/
+		      
+		    	}
+		      
+		    }
+		}
+	
+	 }
 		
-	 
-	/*protected boolean grab() {
+	protected boolean grab() {
 		// TODO Auto-generated method stub
-		return false;
-	}*/
+		return true;
+	}
+	}
 	
 	/* private void lift() {
 		// TODO Auto-generated method stub//
 		*/	        
 		        
-	}
+	
 	/*private void LauncherStopWheels() {
 		// TODO Auto-generated method stub
 		
