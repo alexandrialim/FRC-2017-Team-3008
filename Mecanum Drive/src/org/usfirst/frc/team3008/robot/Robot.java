@@ -17,7 +17,7 @@ public class Robot extends SampleRobot {
 	Joystick joystick = new Joystick(0);//initializing joystick (should be changed to joyR) 
 	Joystick turning = new Joystick(1);//initializing turning joy (change to joyL)
 	Joystick liftstick = new Joystick(2); //Joystick for lift (srd joystick for second driver
-	Spark lift = new Spark(0); // initalizing lift spark
+	Spark sparklift = new Spark (0); // initalizing lift spark
 
 	// Channels for the wheels
 	//Initializing ports
@@ -28,7 +28,7 @@ public class Robot extends SampleRobot {
 	
 	
 	
-	public Robot() {
+	public Robot (){
 		System.out.println("Status:() : Succesfuly defined Robot()"); //Debug info (make UI later)
 		robotDrive = new RobotDrive(kFrontLeftChannel, kRearLeftChannel, kFrontRightChannel, kRearRightChannel);
 		robotDrive.setInvertedMotor(MotorType.kFrontLeft, true);// Inverts Front Left
@@ -192,9 +192,10 @@ public class Robot extends SampleRobot {
 		
 		}
 
+	 private void lift (){
+		// TODO Auto-generated method stub//
+	 }
 	
-	 private void lift() {
-	     
 	int whenActive; final Command command; {
 		    new ButtonScheduler() {
 
@@ -215,22 +216,20 @@ public class Robot extends SampleRobot {
 		     
 		   
 		      
-		    	}
+		    	;}
 		      
-		    }
-		}
+		    
+		    };}
 	
-	 }
-		
+	
+	
+
 	protected boolean grab() {
 		// TODO Auto-generated method stub
 		return true;
 	}
 	}
-	
-	/* private void lift() {
-		// TODO Auto-generated method stub//
-		*/	        
+
 		        
 	
 	/*private void LauncherStopWheels() {
