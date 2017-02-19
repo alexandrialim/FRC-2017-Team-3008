@@ -26,9 +26,7 @@ public class Robot extends SampleRobot {
 	final int kRearRightChannel = 2;
 	final int kFrontRightChannel = 3;
 
-	public void robotInit(){
-		limitSwitch = new DigitalInput(0);
-	}
+
 	public Robot() {
 		
 		System.out.println("Status:() : Succesfuly defined Robot()"); //Debug info (make UI later)
@@ -107,7 +105,7 @@ public class Robot extends SampleRobot {
 		yTank = 0;
 		zTank = 0;
 		
-		//If joysticks are in x+ and x+ go forward and vice versa
+		//If joysticks are in Y+ and Y+ go forward and vice versa
 		if (getTrueY() > 0 && getTurningTrueY() > 0 && otherPosTRUE == 0) 
 			{
 			xTank = getTrueY() + getTurningTrueY() * -1 / sanicMode(); otherPosTRUE = 1;
@@ -120,7 +118,7 @@ public class Robot extends SampleRobot {
 		
 		
 		
-		// If joysticks are in x+ and x- turn in respective direction 
+		// If joysticks are in Y+ and Y- turn in respective direction 
 		if (getTrueY() < 0 && getTurningTrueY() > 0 && otherPosTRUE == 0)
 			{
 			yTank = getTrueY() * 2 / sanicMode(); otherPosTRUE = 1;
@@ -133,17 +131,19 @@ public class Robot extends SampleRobot {
 		
 		
 		
-		//Straif based on joystick y axis
-		if (getTrueX() > 0 && getTurningTrueX() > 0) 
+		//Straif based on joystick X axis
+		if (getTrueX() < 0 && getTurningTrueX() > 0) 
 			{
 				zTank = getTrueX() + getTurningTrueX() / sanicMode();
-			}//1
+			}// 1
 		
-		if (getTrueX() < 0 && getTurningTrueX() < 0)
+		if (getTrueX() > 0 && getTurningTrueX() < 0)
 			{
-				zTank = getTrueY() + getTurningTrueY() / sanicMode();
+				zTank = getTrueX() + getTurningTrueX()  / sanicMode();
 			}// -1
 		
+
+		//straifing to the right doesnt work
 	}
 	
 	public void done() {System.out.println("Status:() : All done!");}
@@ -178,7 +178,7 @@ public class Robot extends SampleRobot {
 		
 			}	
 		while (limitSwitch.get()){
-			Timer.delay(0.005);
+			Timer.delay(10);
 		}
 	}
 	
