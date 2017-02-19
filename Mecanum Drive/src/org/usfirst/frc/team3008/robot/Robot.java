@@ -177,13 +177,11 @@ public class Robot extends SampleRobot {
 			
 		
 			}	
-		while (limitswitch()){
+		while (limitSwitch.get()){
 			Timer.delay(0.005);
 		}
 	}
-	private boolean limitswitch(){
-		// TODO Auto-generated method stub
-		return limitswitch();
-	}
+	
 }
+	
 	
