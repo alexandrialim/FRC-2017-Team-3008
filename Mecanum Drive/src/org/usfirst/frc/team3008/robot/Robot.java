@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3008.robot; // Package team3008~robot
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GamepadBase;
 //Importing stuff from wpilib such as joystick base and Robotdekkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkppppskkkkkkkkkkkkkkkkkkkkkkkkkk
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -8,15 +10,32 @@ import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //main drive class
 public class Robot extends SampleRobot {
 	
 	RobotDrive robotDrive; // Robot drive called robotDrive (Yep lmao)
-	Joystick joystick = new Joystick(0);//initializing joystick (should be changed to joyR) 
-	Joystick turning = new Joystick(1);//initializing turning joy (change to joyL)
+	Joystick joystick = new Joystick(0);
 	Spark sparklift = new Spark(5); // initalizing lift spark
 	DigitalInput limitSwitch; //naming limit switch 
 	
+	public enum XboxMap {
+		// Trigger Right
+		 TR(8),
+		// sticks
+		SLY(1), SLX(2), SRY(4);
+		private int value;
+
+		XboxMap(int val) {
+			this.value = val;
+		}
+
+		public int mappedVal() {
+			return value;
+		}
+	};
+
 	
 	
 	// Channels for the wheels
@@ -26,6 +45,74 @@ public class Robot extends SampleRobot {
 	final int kRearRightChannel = 2;
 	final int kFrontRightChannel = 3;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void automodechooser() {
+
+	SendableChooser autoChooser;
+	
+	//naming new auto selections
+	autoChooser = new SendableChooser();
+	autoChooser.addDefault("Center", new Center());
+	autoChooser.addObject("LeftRed", new Left());
+	autoChooser.addObject("RightRed", new Right());
+	SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
+	}
+	
+
+
+	public void Center(){
+		try {
+			robotDrive.setLeftRightMotorOutputs(0.5, 0.5);
+			Thread.sleep(6000);
+			robotDrive.setLeftRightMotorOutputs(-0.5, -0.5);
+			Thread.sleep(2000);
+			robotDrive.setLeftRightMotorOutputs(0.5, -0.5);
+			Thread.sleep(3000);
+			robotDrive.setLeftRightMotorOutputs(0.5, 0.5);
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	public void Left(){
+		try {
+			robotDrive.setLeftRightMotorOutputs(0.5, 0.5);
+			Thread.sleep(6000);
+			robotDrive.setLeftRightMotorOutputs (0.5, -0.5);
+			Thread.sleep(2000);
+			robotDrive.setLeftRightMotorOutputs (0.5, 0.5);
+			Thread.sleep(3000);
+			robotDrive.setLeftRightMotorOutputs (-0.5,-0.5);
+			Thread.sleep(2000);
+			robotDrive.setLeftRightMotorOutputs (-0.5, 0.5);
+			Thread.sleep(3000);
+			robotDrive.setLeftRightMotorOutputs (0.5, 0.5);
+			Thread.sleep(5000);
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	public void Right(){
+		try {
+			robotDrive.setLeftRightMotorOutputs(0.5, 0.5);
+			Thread.sleep(6000);
+			robotDrive.setLeftRightMotorOutputs (-0.5, 0.5);
+			Thread.sleep(2000);
+			robotDrive.setLeftRightMotorOutputs (0.5, 0.5);
+			Thread.sleep(3000);
+			robotDrive.setLeftRightMotorOutputs (-0.5,-0.5);
+			Thread.sleep(2000);
+			robotDrive.setLeftRightMotorOutputs (0.5,-0.5);
+			Thread.sleep(3000);
+			robotDrive.setLeftRightMotorOutputs (0.5, 0.5);
+			Thread.sleep(5000);
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	public Robot() {
 		
@@ -47,9 +134,9 @@ public class Robot extends SampleRobot {
 	//@Override //This should remain comented
 	
 	//initializing joystick axises 
-	double joystickX = 0;
-	double joystickY = 0;
-	double joystickZ = 0;
+	double SLY = 0;
+	double SLX = 0;
+	double SRY = 0;
 	double turningJoyX = 0;
 	double turningJoyY = 0;
 	
@@ -103,46 +190,43 @@ public class Robot extends SampleRobot {
 		otherPosTRUE = 0;
 		xTank = 0;
 		yTank = 0;
-		zTank = 0;
+
 		
 		//If joysticks are in Y+ and Y+ go forward and vice versa
 		if (getTrueY() > 0 && getTurningTrueY() > 0 && otherPosTRUE == 0) 
 			{
-			xTank = getTrueY() + getTurningTrueY() * -1 / sanicMode(); otherPosTRUE = 1;
+			yTank = getTrueY() + getTurningTrueY() * -1 / sanicMode(); otherPosTRUE = 1;
 			}//1
 		
-		if (getTrueY() < 0 && getTurningTrueY() < 0 && otherPosTRUE == 0) 
+		if (getTrueY()  > 0 && getTurningTrueY() < 0 && otherPosTRUE == 0) 
 			{
-			xTank = getTrueY() + getTurningTrueY() * -1 / sanicMode(); otherPosTRUE = 1;
+			yTank = getTrueY() + getTurningTrueY() * 1 / sanicMode(); otherPosTRUE = 1;
 			}//-1
 		
 		
 		
-		// If joysticks are in Y+ and Y- turn in respective direction 
-		if (getTrueY() < 0 && getTurningTrueY() > 0 && otherPosTRUE == 0)
+		/*// If joysticks are in Y+ and Y- turn in respective direction 
+		if (getTrueX() > 0 && getTurningTrueX() > 0 && otherPosTRUE == 0)
 			{
-			yTank = getTrueY() * 2 / sanicMode(); otherPosTRUE = 1;
+			xTank = getTrueX() * 2 / sanicMode(); otherPosTRUE = 1;
 			}//1
 		
-		if (getTrueY() > 0 && getTurningTrueY() < 0 && otherPosTRUE == 0)
+		if (getTrueY() < 0 && getTurningTrueY() < 0 && otherPosTRUE == 0)
 			{
-			yTank = getTurningTrueY() * 2 / sanicMode(); otherPosTRUE = 1;
+			yTank = getTurningTrueX() * 2 / sanicMode(); otherPosTRUE = 1;
 			}//-1
+*/
 		
-		
-		
-		//Straif based on joystick X axis
-		if (getTrueX() < 0 && getTurningTrueX() > 0) 
-			{
-				zTank = getTrueX() + getTurningTrueX() / sanicMode();
-			}// 1
-		
-		if (getTrueX() > 0 && getTurningTrueX() < 0)
-			{
-				zTank = getTrueX() + getTurningTrueX()  / sanicMode();
-			}// -1
-		
-
+		//Straif based on joystick y axis
+		if (getTrueX() < 0 && getTurningTrueX() > 0 && otherPosTRUE == 0)
+		{
+		xTank = getTrueX()  * 2 / sanicMode(); otherPosTRUE = 1;
+		}//1
+	
+	if (getTrueX() > 0 && getTurningTrueX() < 0 && otherPosTRUE == 0)
+		{
+		xTank = getTurningTrueX() * 2 / sanicMode(); otherPosTRUE = 1;
+		}//-1
 		//straifing to the right doesnt work
 	}
 	
@@ -155,17 +239,13 @@ public class Robot extends SampleRobot {
 		robotDrive.setSafetyEnabled(false);
 		while (isOperatorControl() && isEnabled()) {
 			//Updating joystickX and joystickY variables
-			joystickX = joystick.getRawAxis(0);
-			joystickY = joystick.getRawAxis(1);
-			
-			//Updating turningJoyX and turningJoyY
-			turningJoyX = turning.getRawAxis(0);
-			turningJoyY = turning.getRawAxis(1);
-			
-			//Updating 
-			turningTrigger = turning.getTrigger();
-			driveTrigger = joystick.getTrigger();
-			
+			SLY = joystick.getRawAxis(1);
+			SLX = joystick.getRawAxis(2);
+			SRY = joystick.getRawAxis(4);
+			double getRawAxis(final int X) {
+			    return m_ds.getStickAxis(getPort(), axis);
+			  }
+
 			updateStickValues(); // Updating yTank xTank and zTank see the function for more information
 		
 			lift(); //Oporation of the lift see lift function
@@ -183,5 +263,4 @@ public class Robot extends SampleRobot {
 	}
 	
 }
-	
 	
